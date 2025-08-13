@@ -1,7 +1,7 @@
 workflows:
   react-native-android:
     name: IT Professionals Android Build
-    max_build_duration: 60
+    max_build_duration: 90
     instance_type: mac_mini_m1
     triggering:
       events:
@@ -13,26 +13,67 @@ workflows:
           source: true
     environment:
       vars:
-        PACKAGE_NAME: "com.itprofessionals.app"
+        PACKAGE_NAME: 'com.itprofessionals.app'
+        NODE_OPTIONS: '--max-old-space-size=4096'
       node: 18.17.0
       npm: 9.6.7
     scripts:
-      - name: Install npm dependencies
+      - name: Install dependencies
         script: |
-          npm install
-      - name: Install Expo CLI
+          npm ci --legacy-peer-deps
+      - name: Install global dependencies
         script: |
-          npm install -g @expo/cli@latest
-      - name: Expo install dependencies
+          npm install -g @expo/cli@latest eas-cli@latest
+      - name: Expo doctor check
         script: |
-          npx expo install --fix
-      - name: Build Android APK with Expo
+          npx expo doctor
+      - name: EAS Build Android APK
         script: |
-          npx expo build:android --type apk --no-publish --non-interactive
+          npx eas build --platform android --profile preview --non-interactive --local --output ./app.apk
     artifacts:
-      - "*.apk"
-      - build/**/outputs/**/*.apk
-      - build/**/outputs/**/*.aab
+      - ./app.apk
+      - '*.apk'
+      - '*.aab'
+    publishing:
+      email:
+        recipients:
+          - dharaniselvaraj12@gmail.com
+        notify:
+          success: true
+          failure: true
+
+  react-native-ios:
+    name: IT Professionals iOS Build  
+    max_build_duration: 90
+    instance_type: mac_mini_m1
+    triggering:
+      events:
+        - push
+        - tag
+      branch_patterns:
+        - pattern: main
+          include: true
+          source: true
+    environment:
+      vars:
+        BUNDLE_ID: 'com.itprofessionals.app'
+      node: 18.17.0
+      npm: 9.6.7
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Install dependencies
+        script: |
+          npm ci --legacy-peer-deps
+      - name: Install global dependencies
+        script: |
+          npm install -g @expo/cli@latest eas-cli@latest
+      - name: EAS Build iOS
+        script: |
+          npx eas build --platform ios --profile preview --non-interactive --local --output ./app.ipa
+    artifacts:
+      - ./app.ipa
+      - '*.ipa'
     publishing:
       email:
         recipients:
@@ -55,7 +96,7 @@ workflows:
           source: true
     environment:
       vars:
-        BUNDLE_ID: "com.itprofessionals.app"
+        BUNDLE_ID: 'com.itprofessionals.app'
       node: 18.17.0
       npm: 9.6.7
       xcode: latest
@@ -74,7 +115,7 @@ workflows:
         script: |
           npx expo build:ios --type archive --no-publish --non-interactive
     artifacts:
-      - "*.ipa"
+      - '*.ipa'
       - build/ios/ipa/*.ipa
     publishing:
       email:

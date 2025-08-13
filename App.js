@@ -11,6 +11,8 @@ import NetworkScreen from './src/screens/NetworkScreen';
 import JobsScreen from './src/screens/JobsScreen';
 import MessagesScreen from './src/screens/MessagesScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
+import SubscriptionScreen from './src/screens/SubscriptionScreen';
+import PostJobScreen from './src/screens/PostJobScreen';
 
 const Stack = createStackNavigator();
 
@@ -64,6 +66,16 @@ export default function App() {
           name="Profile"
           component={ProfileScreen}
           options={{ title: 'Profile' }}
+        />
+        <Stack.Screen
+          name="Subscription"
+          component={SubscriptionScreen}
+          options={{ title: 'Choose Your Plan' }}
+        />
+        <Stack.Screen
+          name="PostJob"
+          component={PostJobScreen}
+          options={{ title: 'Post a Job' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

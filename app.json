@@ -1,0 +1,32 @@
+{
+  "name": "ITProfessionalsApp",
+  "displayName": "IT Professionals",
+  "expo": {
+    "name": "IT Professionals",
+    "slug": "it-professionals-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#0077B5"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.itprofessionals.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0077B5"
+      },
+      "package": "com.itprofessionals.app",
+      "versionCode": 1
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}

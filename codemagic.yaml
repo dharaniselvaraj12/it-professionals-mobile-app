@@ -1,0 +1,85 @@
+workflows:
+  react-native-android:
+    name: IT Professionals Android Build
+    max_build_duration: 60
+    instance_type: mac_mini_m1
+    triggering:
+      events:
+        - push
+        - tag
+      branch_patterns:
+        - pattern: main
+          include: true
+          source: true
+    environment:
+      vars:
+        PACKAGE_NAME: "com.itprofessionals.app"
+      node: 18.17.0
+      npm: 9.6.7
+    scripts:
+      - name: Install npm dependencies
+        script: |
+          npm install
+      - name: Install Expo CLI
+        script: |
+          npm install -g @expo/cli@latest
+      - name: Expo install dependencies
+        script: |
+          npx expo install --fix
+      - name: Build Android APK with Expo
+        script: |
+          npx expo build:android --type apk --no-publish --non-interactive
+    artifacts:
+      - "*.apk"
+      - build/**/outputs/**/*.apk
+      - build/**/outputs/**/*.aab
+    publishing:
+      email:
+        recipients:
+          - dharaniselvaraj12@gmail.com
+        notify:
+          success: true
+          failure: true
+
+  react-native-ios:
+    name: IT Professionals iOS Build
+    max_build_duration: 60
+    instance_type: mac_mini_m1
+    triggering:
+      events:
+        - push
+        - tag
+      branch_patterns:
+        - pattern: main
+          include: true
+          source: true
+    environment:
+      vars:
+        BUNDLE_ID: "com.itprofessionals.app"
+      node: 18.17.0
+      npm: 9.6.7
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Install npm dependencies
+        script: |
+          npm install
+      - name: Install Expo CLI
+        script: |
+          npm install -g @expo/cli@latest
+      - name: Expo install dependencies
+        script: |
+          npx expo install --fix
+      - name: Build iOS IPA with Expo
+        script: |
+          npx expo build:ios --type archive --no-publish --non-interactive
+    artifacts:
+      - "*.ipa"
+      - build/ios/ipa/*.ipa
+    publishing:
+      email:
+        recipients:
+          - dharaniselvaraj12@gmail.com
+        notify:
+          success: true
+          failure: true

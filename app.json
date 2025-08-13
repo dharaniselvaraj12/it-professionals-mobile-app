@@ -1,6 +1,4 @@
 {
-  "name": "ITProfessionalsApp",
-  "displayName": "IT Professionals",
   "expo": {
     "name": "IT Professionals",
     "slug": "it-professionals-app",
@@ -15,15 +13,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.itprofessionals.app"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#0077B5"
-      },
-      "package": "com.itprofessionals.app",
-      "versionCode": 1
+      }
     },
     "web": {
       "bundler": "metro"
